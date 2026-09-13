@@ -1,7 +1,7 @@
 
 # 视频壁纸插件 / Video Wallpaper Plugin
 
-针对 iNextOS / RoceOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
+针对 iNextOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
 <img width="1891" height="933" alt="image" src="https://github.com/user-attachments/assets/1f1eddd8-cae7-4f4d-92ce-fad8fb18335e" />
 <img width="1880" height="946" alt="image" src="https://github.com/user-attachments/assets/7427b855-567b-496c-81a2-51d27deac77b" />
 
