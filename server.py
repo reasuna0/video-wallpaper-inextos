@@ -249,7 +249,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
     live_update_script = """<script>
 (function() {
   var API_BASE = 'http://' + window.location.hostname + ':8686';
-  function checkWallpaper() {
+  setInterval(function() {
     fetch(API_BASE + '/api/status').then(function(r) { return r.json(); }).then(function(data) {
       if (data.enabled && data.video) {
         var newSrc = '/assets/wallpapers/' + data.video;
@@ -267,9 +267,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
         }
       }
     }).catch(function(){});
-  }
-  checkWallpaper();
-  setInterval(checkWallpaper, 1000);
+  }, 1000);
 })();
 </script>"""
 
@@ -454,7 +452,9 @@ class Handler(BaseHTTPRequestHandler):
                 config = load_config()
                 config["video"] = video
                 save_config(config)
-                enable_wallpaper()
+                # 已启用时不重写 index.html，靠实时更新脚本自动切换（更快）
+                if not is_enabled():
+                    enable_wallpaper()
                 self.send_json({"success": True, "message": "Selected: " + video})
             else:
                 self.send_json({"success": False, "message": "Not found"}, 400)
@@ -1018,6 +1018,13 @@ document.getElementById('newFolderInput').addEventListener('keypress', function(
 });
 loadStatus();
 </script>
+
+<footer style="margin-top: 40px; padding: 20px; text-align: center; color: #888; font-size: 13px; border-top: 1px solid #333;">
+  <p style="margin: 5px 0;">作者 / Author: 豆包、ReAsuna</p>
+  <p style="margin: 5px 0;">邮箱 / Email: <a href="mailto:reasuna@reasuna.com" style="color: #6699ff;">reasuna@reasuna.com</a></p>
+  <p style="margin: 5px 0;">项目 / Project: <a href="https://github.com/reasuna0/video-wallpaper-inextos" target="_blank" style="color: #6699ff;">https://github.com/reasuna0/video-wallpaper-inextos</a></p>
+</footer>
+
 </body>
 </html>"""
 
