@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 set -e
 APP_DIR="/opt/video-wallpaper"
 COMPOSE_DIR="/opt/roceos/apps/video-wallpaper"
