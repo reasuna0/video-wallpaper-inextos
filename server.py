@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 import os
 import subprocess
 import threading
@@ -249,7 +249,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
     live_update_script = """<script>
 (function() {
   var API_BASE = 'http://' + window.location.hostname + ':8686';
-  setInterval(function() {
+  function checkWallpaper() {
     fetch(API_BASE + '/api/status').then(function(r) { return r.json(); }).then(function(data) {
       if (data.enabled && data.video) {
         var newSrc = '/assets/wallpapers/' + data.video;
@@ -267,7 +267,9 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
         }
       }
     }).catch(function(){});
-  }, 1000);
+  }
+  checkWallpaper();
+  setInterval(checkWallpaper, 1000);
 })();
 </script>"""
 
@@ -452,9 +454,7 @@ class Handler(BaseHTTPRequestHandler):
                 config = load_config()
                 config["video"] = video
                 save_config(config)
-                # 已启用时不重写 index.html，靠实时更新脚本自动切换（更快）
-                if not is_enabled():
-                    enable_wallpaper()
+                enable_wallpaper()
                 self.send_json({"success": True, "message": "Selected: " + video})
             else:
                 self.send_json({"success": False, "message": "Not found"}, 400)
