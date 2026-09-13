@@ -1,0 +1,22 @@
+services:
+  video-wallpaper:
+    image: video-wallpaper:ffmpeg
+    container_name: video-wallpaper
+    restart: unless-stopped
+    ports:
+      - "8686:8686"
+    volumes:
+      - /opt/video-wallpaper/server.py:/app/server.py:ro
+      - /opt/roceos/www:/opt/roceos/www
+      - /opt/roceos/data:/opt/roceos/data
+      - /mnt:/mnt
+      - /opt:/opt
+      - /root:/root
+      - /home:/home
+      - /data:/data
+      - /var:/var
+      - /tmp:/tmp
+    working_dir: /app
+    command: python server.py
+    environment:
+      - TZ=Asia/Shanghai
