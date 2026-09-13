@@ -1,7 +1,9 @@
+
 # 视频壁纸插件 / Video Wallpaper Plugin
 
 针对 iNextOS / RoceOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
-
+<img width="1891" height="933" alt="image" src="https://github.com/user-attachments/assets/1f1eddd8-cae7-4f4d-92ce-fad8fb18335e" />
+<img width="1889" height="937" alt="image" src="https://github.com/user-attachments/assets/43b5b99a-8f56-4a4e-ba82-c05f7c53a91f" />
 Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the login page.
 
 [![Version](https://img.shields.io/badge/version-v1.6-blue)](https://github.com/reasuna0/video-wallpaper-inextos/releases)
