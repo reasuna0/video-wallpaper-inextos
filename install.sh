@@ -4,7 +4,7 @@ APP_DIR="/opt/video-wallpaper"
 COMPOSE_DIR="/opt/roceos/apps/video-wallpaper"
 PORT=8686
 
-echo "=== Video Wallpaper v1.7 Installer ==="
+echo "=== Video Wallpaper v1.7.2 Installer ==="
 
 # 鍒涘缓鐩綍
 mkdir -p "$APP_DIR/videos"
@@ -52,7 +52,7 @@ if os.path.exists(db_path):
         if cursor.fetchone():
             cursor.execute("""
                 UPDATE installed_apps
-                SET status='running', version='1.7', compose_file=?,
+                SET status='running', version='1.7.2', compose_file=?,
                     install_path='/opt/roceos/apps/video-wallpaper',
                     window_type='webapp', webapp_url='/apps/video-wallpaper/',
                     updated_at=datetime('now')
@@ -65,8 +65,8 @@ if os.path.exists(db_path):
                  compose_file, install_path, window_type, webapp_port, webapp_url,
                  created_at, updated_at)
                 VALUES (1, 'video-wallpaper', 'docker', 'Video Wallpaper',
-                        '/api/v1/icons/vito-deploy.svg', '1.7', 'running',
-                        '{"HTTP_PORT":8686,"VERSION":"1.7"}',
+                        '/api/v1/icons/vito-deploy.svg', '1.7.2', 'running',
+                        '{"HTTP_PORT":8686,"VERSION":"1.7.2"}',
                         ?, '/opt/roceos/apps/video-wallpaper',
                         'webapp', 8686, '/apps/video-wallpaper/',
                         datetime('now'), datetime('now'))
