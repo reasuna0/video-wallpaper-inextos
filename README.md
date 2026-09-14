@@ -1,7 +1,7 @@
 
 # 视频壁纸插件 / Video Wallpaper Plugin
 
-针对 iNextOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
+针对 iNextOS 软路由系统的视频壁纸插件，为web页面设置动态视频背景。
 <img width="1891" height="933" alt="image" src="https://github.com/user-attachments/assets/1f1eddd8-cae7-4f4d-92ce-fad8fb18335e" />
 <img width="1880" height="946" alt="image" src="https://github.com/user-attachments/assets/7427b855-567b-496c-81a2-51d27deac77b" />
 
@@ -16,7 +16,7 @@ Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video
 ## 功能特性 / Features
 
 ### 中文
-- ✅ **实时切换壁纸**：在管理页面点击视频后，登录页面壁纸立即自动切换，无需手动刷新页面
+- ✅ **实时切换壁纸**：在管理页面点击视频后，web页面壁纸立即自动切换，无需手动刷新页面
 - ✅ **视频封面缩略图**：每个视频自动生成第一帧预览图，一目了然（3线程并发生成）
 - ✅ **自定义视频目录**：支持浏览和选择任意目录，可新建文件夹
 - ✅ **上传与转码**：MP4/WebM/OGG 直接播放，其他格式自动转码，带进度条，失败自动清理
