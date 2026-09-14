@@ -5,7 +5,7 @@
 <img width="1891" height="933" alt="image" src="https://github.com/user-attachments/assets/1f1eddd8-cae7-4f4d-92ce-fad8fb18335e" />
 <img width="1880" height="946" alt="image" src="https://github.com/user-attachments/assets/7427b855-567b-496c-81a2-51d27deac77b" />
 
-Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the login page.
+Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the web admin interface.
 
 [![Version](https://img.shields.io/badge/version-v1.7.2-blue)](https://github.com/reasuna0/video-wallpaper-inextos/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -115,7 +115,7 @@ bash uninstall.sh
 
 ```
 ┌─────────────────────────────────────────┐
-│  Router Login Page (port 80)            │
+│  Router Web Interface (port 80)        │
 │  ┌───────────────────────────────────┐  │
 │  │  <video id="video-bg">            │  │
 │  │  Live update script (1s polling) │  │
