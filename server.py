@@ -245,7 +245,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
 
     # Build video tag + 实时轮询脚本
     muted_attr = "muted" if config.get("muted", True) else ""
-    video_tag = f'<video id="video-bg" src="/{SYMLINK_NAME}/{config["video"]}" autoplay {muted_attr} loop playsinline></video>'
+    video_tag = f'<video id="video-bg" src="/{SYMLINK_NAME}/{quote(config["video"])}" autoplay {muted_attr} loop playsinline></video>'
     # 实时更新脚本：每1秒轮询，视频变化时自动切换，无需刷新页面
     # 注意：必须用完整地址，因为壁纸页面在路由器主站(80端口)，而API在8686端口
     live_update_script = """<script>
@@ -1136,6 +1136,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 
