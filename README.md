@@ -1,13 +1,24 @@
+## v1.7.3 更新说明 / Changelog
+
+**修复 / Bug Fixes:**
+1. 修复缩略图生成失败问题：ffmpeg 参数 `-noaccurate_seek` 位置错误，导致所有新上传视频无法生成缩略图
+2. 修复特殊字符文件名（如 `#`）无法播放的问题：视频 URL 未做编码，`#` 被浏览器当作锚点截断
+3. 缩略图 URL 增加 URL 编码，支持中文、空格、特殊字符文件名
+
+**之前版本的视频需要手动刷新一次页面触发缩略图重新生成。**
+
+---
+
 
 # 视频壁纸插件 / Video Wallpaper Plugin
 
-针对 iNextOS 软路由系统的视频壁纸插件，为web页面设置动态视频背景。
+针对 iNextOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
 <img width="1891" height="933" alt="image" src="https://github.com/user-attachments/assets/1f1eddd8-cae7-4f4d-92ce-fad8fb18335e" />
 <img width="1880" height="946" alt="image" src="https://github.com/user-attachments/assets/7427b855-567b-496c-81a2-51d27deac77b" />
 
-Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the web admin interface.
+Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the login page.
 
-[![Version](https://img.shields.io/badge/version-v1.7.2-blue)](https://github.com/reasuna0/video-wallpaper-inextos/releases)
+[![Version](https://img.shields.io/badge/version-v1.7.3-blue)](https://github.com/reasuna0/video-wallpaper-inextos/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-iNextOS%2FRoceOS-orange)]()
 
@@ -16,7 +27,7 @@ Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video
 ## 功能特性 / Features
 
 ### 中文
-- ✅ **实时切换壁纸**：在管理页面点击视频后，web页面壁纸立即自动切换，无需手动刷新页面
+- ✅ **实时切换壁纸**：在管理页面点击视频后，登录页面壁纸立即自动切换，无需手动刷新页面
 - ✅ **视频封面缩略图**：每个视频自动生成第一帧预览图，一目了然（3线程并发生成）
 - ✅ **自定义视频目录**：支持浏览和选择任意目录，可新建文件夹
 - ✅ **上传与转码**：MP4/WebM/OGG 直接播放，其他格式自动转码，带进度条，失败自动清理
@@ -46,7 +57,7 @@ Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video
 2. 将安装包上传到软路由
 3. 解压并安装：
    ```bash
-   tar -xzf video-wallpaper-v1.7.2.tar.gz
+   tar -xzf video-wallpaper-v1.7.3.tar.gz
    cd video-wallpaper
    bash install.sh
    ```
@@ -57,7 +68,7 @@ Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video
 2. Upload the package to your router
 3. Extract and install:
    ```bash
-   tar -xzf video-wallpaper-v1.7.2.tar.gz
+   tar -xzf video-wallpaper-v1.7.3.tar.gz
    cd video-wallpaper
    bash install.sh
    ```
@@ -115,7 +126,7 @@ bash uninstall.sh
 
 ```
 ┌─────────────────────────────────────────┐
-│  Router Web Interface (port 80)        │
+│  Router Login Page (port 80)            │
 │  ┌───────────────────────────────────┐  │
 │  │  <video id="video-bg">            │  │
 │  │  Live update script (1s polling) │  │
@@ -140,3 +151,4 @@ bash uninstall.sh
 ## License
 
 MIT
+
