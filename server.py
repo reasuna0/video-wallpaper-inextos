@@ -1,5 +1,6 @@
 ﻿#!/usr/bin/env python3
 import os
+from urllib.parse import quote
 import subprocess
 import threading
 import re
@@ -105,9 +106,10 @@ def generate_thumbnail(video_name):
     try:
         # -ss 放在 -i 前面，使用关键帧 seek，速度快很多
         subprocess.run(
-            ['ffmpeg', '-y', '-ss', '00:00:01', '-i', video_path,
+            ['ffmpeg', '-y', '-ss', '00:00:01', '-noaccurate_seek',
+             '-i', video_path,
              '-vframes', '1', '-q:v', '4', '-vf', 'scale=240:-1',
-             '-noaccurate_seek', thumb_path],
+             thumb_path],
             capture_output=True, timeout=15
         )
         if os.path.exists(thumb_path) and os.path.getsize(thumb_path) > 0:
@@ -161,7 +163,7 @@ def list_videos():
             path = os.path.join(get_video_dir(), f)
             thumb_path = get_thumb_path(f)
             if os.path.exists(thumb_path):
-                thumb_url = "/api/thumb?video=" + f
+                thumb_url = "/api/thumb?video=" + quote(f)
             else:
                 thumb_url = None
                 queue_thumbnail(f)  # 后台异步生成
@@ -252,7 +254,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
   function checkWallpaper() {
     fetch(API_BASE + '/api/status').then(function(r) { return r.json(); }).then(function(data) {
       if (data.enabled && data.video) {
-        var newSrc = '/assets/wallpapers/' + data.video;
+        var newSrc = '/assets/wallpapers/' + encodeURIComponent(data.video);
         var video = document.getElementById('video-bg');
         if (video && video.getAttribute('src') !== newSrc) {
           video.setAttribute('src', newSrc);
@@ -1134,3 +1136,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
