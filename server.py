@@ -1,5 +1,6 @@
 ﻿#!/usr/bin/env python3
 import os
+from urllib.parse import quote
 import subprocess
 import threading
 import re
@@ -8,7 +9,7 @@ import json
 import shutil
 import base64
 import sqlite3
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse
 
 WWW_DIR = "/opt/roceos/www"
@@ -105,9 +106,10 @@ def generate_thumbnail(video_name):
     try:
         # -ss 放在 -i 前面，使用关键帧 seek，速度快很多
         subprocess.run(
-            ['ffmpeg', '-y', '-ss', '00:00:01', '-i', video_path,
+            ['ffmpeg', '-y', '-ss', '00:00:01', '-noaccurate_seek',
+             '-i', video_path,
              '-vframes', '1', '-q:v', '4', '-vf', 'scale=240:-1',
-             '-noaccurate_seek', thumb_path],
+             thumb_path],
             capture_output=True, timeout=15
         )
         if os.path.exists(thumb_path) and os.path.getsize(thumb_path) > 0:
@@ -161,7 +163,7 @@ def list_videos():
             path = os.path.join(get_video_dir(), f)
             thumb_path = get_thumb_path(f)
             if os.path.exists(thumb_path):
-                thumb_url = "/api/thumb?video=" + f
+                thumb_url = "/api/thumb?video=" + quote(f)
             else:
                 thumb_url = None
                 queue_thumbnail(f)  # 后台异步生成
@@ -243,7 +245,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
 
     # Build video tag + 实时轮询脚本
     muted_attr = "muted" if config.get("muted", True) else ""
-    video_tag = f'<video id="video-bg" src="/{SYMLINK_NAME}/{config["video"]}" autoplay {muted_attr} loop playsinline></video>'
+    video_tag = f'<video id="video-bg" src="/{SYMLINK_NAME}/{quote(config["video"])}" autoplay {muted_attr} loop playsinline></video>'
     # 实时更新脚本：每1秒轮询，视频变化时自动切换，无需刷新页面
     # 注意：必须用完整地址，因为壁纸页面在路由器主站(80端口)，而API在8686端口
     live_update_script = """<script>
@@ -252,7 +254,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
   function checkWallpaper() {
     fetch(API_BASE + '/api/status').then(function(r) { return r.json(); }).then(function(data) {
       if (data.enabled && data.video) {
-        var newSrc = '/assets/wallpapers/' + data.video;
+        var newSrc = '/assets/wallpapers/' + encodeURIComponent(data.video);
         var video = document.getElementById('video-bg');
         if (video && video.getAttribute('src') !== newSrc) {
           video.setAttribute('src', newSrc);
@@ -328,6 +330,7 @@ def delete_video(video_name):
 
 
 class Handler(BaseHTTPRequestHandler):
+    timeout = 30
     def end_headers(self):
         # 添加 CORS 头，允许路由器主页面(80端口)跨域请求
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -1127,10 +1130,15 @@ def register_app_icon():
 def main():
     ensure_symlink()
     register_app_icon()
-    server = HTTPServer(('0.0.0.0', PORT), Handler)
+    server = ThreadingHTTPServer(('0.0.0.0', PORT), Handler)
     print("Video Wallpaper Manager started on port " + str(PORT))
     server.serve_forever()
 
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
