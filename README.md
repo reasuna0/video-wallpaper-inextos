@@ -32,7 +32,9 @@
 
 针对 iNextOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
 ![登录页视频壁纸效果](images/login-video-wallpaper.png)
-`n![桌面壁纸效果](images/desktop-video-wallpaper.png)
+
+
+![桌面壁纸效果](images/desktop-video-wallpaper.png)
 
 Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the login page.
 
