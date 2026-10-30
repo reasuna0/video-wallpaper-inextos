@@ -1,3 +1,12 @@
+## v1.7.5 更新说明 / Changelog
+
+**修复 / Bug Fixes:**
+1. **修复登录页视频壁纸不显示（视频每秒重载、永远播不出画面）**：静态 `<video>` 的 src 用 Python `quote()` 编码（括号转义为 `%28%29`），而页面 1 秒轮询脚本用 JS `encodeURIComponent`（括号不编码），两者比较恒不相等，导致每秒触发一次 `video.load()` 重载，视频永远加载不出画面。改为记忆变量 `curVideo`，仅当配置的视频路径真正变化时才重载视频。
+2. **修复视频壁纸被登录页渐变背景遮挡**：登录页 `#root` 创建独立层叠上下文盖住视频层，且内部登录背景组件（不透明蓝渐变 + 山形波浪）完全遮住视频。新增 CSS 规则隐藏该渐变背景层，让视频壁纸完整透出。
+
+**升级后请重启 video-wallpaper 容器，刷新一次登录页即可看到视频壁纸（页面已禁用缓存）。**
+
+---
 ## v1.7.4 更新说明 / Changelog
 
 **修复 / Bug Fixes:**
@@ -22,12 +31,12 @@
 # 视频壁纸插件 / Video Wallpaper Plugin
 
 针对 iNextOS 软路由系统的视频壁纸插件，为登录页面设置动态视频背景。
-<img width="1891" height="933" alt="image" src="https://github.com/user-attachments/assets/1f1eddd8-cae7-4f4d-92ce-fad8fb18335e" />
-<img width="1880" height="946" alt="image" src="https://github.com/user-attachments/assets/7427b855-567b-496c-81a2-51d27deac77b" />
+![登录页视频壁纸效果](images/login-video-wallpaper.png)
+`n![桌面壁纸效果](images/desktop-video-wallpaper.png)
 
 Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video background for the login page.
 
-[![Version](https://img.shields.io/badge/version-v1.7.4-blue)](https://github.com/reasuna0/video-wallpaper-inextos/releases)
+[![Version](https://img.shields.io/badge/version-v1.7.5-blue)](https://github.com/reasuna0/video-wallpaper-inextos/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-iNextOS%2FRoceOS-orange)]()
 
