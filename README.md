@@ -77,7 +77,7 @@ Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video
 2. 将安装包上传到软路由
 3. 解压并安装：
    ```bash
-   tar -xzf video-wallpaper-v1.7.4.tar.gz
+   tar -xzf video-wallpaper-v1.7.5.tar.gz
    cd video-wallpaper
    bash install.sh
    ```
@@ -88,7 +88,7 @@ Video wallpaper plugin for iNextOS / RoceOS router systems, sets a dynamic video
 2. Upload the package to your router
 3. Extract and install:
    ```bash
-   tar -xzf video-wallpaper-v1.7.4.tar.gz
+   tar -xzf video-wallpaper-v1.7.5.tar.gz
    cd video-wallpaper
    bash install.sh
    ```
