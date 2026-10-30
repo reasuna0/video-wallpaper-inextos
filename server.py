@@ -62,6 +62,7 @@ VIDEO_BG_TEMPLATE = """<!DOCTYPE html>
       #root > div {{ background: transparent !important; }}
       #root [style*="background-image"] {{ background-image: none !important; }}
       #root [class*="wallpaper"], #root [class*="background"], #root [class*="bg"] {{ background-image: none !important; background-color: transparent !important; }}
+      #root .fixed.inset-0.-z-10.overflow-hidden, #root [class*="-z-10"][class*="overflow-hidden"] {{ display: none !important; }}
     </style>
   </head>
   <body>
@@ -241,6 +242,7 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
       #root > div {{ background: transparent !important; }}
       #root [style*="background-image"] {{ background-image: none !important; }}
       #root [class*="wallpaper"], #root [class*="background"], #root [class*="bg"] {{ background-image: none !important; background-color: transparent !important; }}
+      #root .fixed.inset-0.-z-10.overflow-hidden, #root [class*="-z-10"][class*="overflow-hidden"] {{ display: none !important; }}
     </style>"""
 
     # Build video tag + 实时轮询脚本
@@ -251,21 +253,27 @@ def enable_wallpaper(video=None, opacity=None, muted=None):
     live_update_script = """<script>
 (function() {
   var API_BASE = 'http://' + window.location.hostname + ':8686';
+  var curVideo = null; // 记住当前已加载的视频，只有视频切换时才重载，避免 src 编码差异导致每秒重载
   function checkWallpaper() {
     fetch(API_BASE + '/api/status').then(function(r) { return r.json(); }).then(function(data) {
       if (data.enabled && data.video) {
-        var newSrc = '/assets/wallpapers/' + encodeURIComponent(data.video);
         var video = document.getElementById('video-bg');
-        if (video && video.getAttribute('src') !== newSrc) {
-          video.setAttribute('src', newSrc);
-          video.load();
-          video.play().catch(function(){});
+        if (curVideo !== data.video) {
+          curVideo = data.video;
+          var newSrc = '/assets/wallpapers/' + encodeURIComponent(data.video);
+          if (video) {
+            video.setAttribute('src', newSrc);
+            video.load();
+            video.play().catch(function(){});
+          }
         }
-        if (data.opacity !== undefined) {
-          video.style.opacity = data.opacity;
-        }
-        if (data.muted !== undefined) {
-          video.muted = data.muted;
+        if (video) {
+          if (data.opacity !== undefined) {
+            video.style.opacity = data.opacity;
+          }
+          if (data.muted !== undefined) {
+            video.muted = data.muted;
+          }
         }
       }
     }).catch(function(){});
